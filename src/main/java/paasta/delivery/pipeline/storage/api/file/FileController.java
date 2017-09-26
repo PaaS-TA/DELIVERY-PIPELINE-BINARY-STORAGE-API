@@ -47,6 +47,7 @@ public class FileController {
     @RequestMapping(value = {BASE_URL + "/fileDelete"}, method = RequestMethod.POST)
     @ResponseBody
     public String deleteFile(@RequestBody FileInfo fileInfo){
+        // TODO
         fileService.deleteFile(fileInfo);
         return "delete success";
     }
