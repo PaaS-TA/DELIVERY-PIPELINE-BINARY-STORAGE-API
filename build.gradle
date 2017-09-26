@@ -1,0 +1,41 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+ext {
+	springBootVersion = '1.5.3.RELEASE'
+}
+
+version '0.1'
+
+war {
+	baseName = 'paasta-delivery-pipeline-storage-api'
+	version "$version"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+	compile("org.javaswift:joss:0.9.12")
+	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}

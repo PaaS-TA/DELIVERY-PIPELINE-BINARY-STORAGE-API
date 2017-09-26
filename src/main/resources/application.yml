@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: paasta-delivery-pipeline-binary-storage-api
+  http:
+    multipart:
+      maxFileSize: 1000Mb
+      maxRequestSize: 1000Mb
+
+---
+spring:
+  profiles:
+    active: local
+
+server:
+  port: {SERVER-PORT}
+
+logging:
+  level:
+    ROOT: INFO
+  path: classpath:logback-spring.xml
+  file: logs/application.log
+
+commonApi:
+  url: COMMOM-API-URL
+  authorization:
+    id: COMMOM-API-AUTHORIZATION-ID
+    password: COMMOM-API-AUTHORIZATION-PASSWORD
+
+objectStorage:
+  tenantName: OBJECT-STORAGE-TENANT-NAME
+  username: OBJECT-STORAGE-USER-NAME
+  password: OBJECT-STORAGE-PASSWORD
+  container: OBJECT-STORAGE-CONTAINER
+  authUrl: OBJECT-STORAGE-AUTH-URL
+
+---
+spring:
+  profiles: dev
+
+logging:
+  level:
+    ROOT: DEBUG
+  path: classpath:logback-spring.xml
+  file: logs/application.log
+
+server:
+  port: {SERVER-PORT}
+
+commonApi:
+  url: COMMOM-API-URL
+  authorization:
+    id: COMMOM-API-AUTHORIZATION-ID
+    password: COMMOM-API-AUTHORIZATION-PASSWORD
+
+objectStorage:
+  tenantName: OBJECT-STORAGE-TENANT-NAME
+  username: OBJECT-STORAGE-USER-NAME
+  password: OBJECT-STORAGE-PASSWORD
+  container: OBJECT-STORAGE-CONTAINER
+  authUrl: OBJECT-STORAGE-AUTH-URL
