@@ -17,7 +17,7 @@
         </encoder>
     </appender>
 
-    <logger name="delivery.pipeline.ui" level="info"/>
+    <logger name="delivery.pipeline.binary.storage.api" level="info"/>
 
     <root level="INFO">
         <appender-ref ref="dailyRollingFileAppender"/>
