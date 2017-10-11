@@ -5,7 +5,7 @@
     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <prudent>true</prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>applicatoin.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/var/vcap/sys/log/delivery-pipeline-binary-storage-api/applicatoin.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -17,7 +17,7 @@
         </encoder>
     </appender>
 
-    <logger name="delivery.pipeline.binary.storage.api" level="INFO"/>
+    <logger name="delivery.pipeline.ui" level="info"/>
 
     <root level="INFO">
         <appender-ref ref="dailyRollingFileAppender"/>
