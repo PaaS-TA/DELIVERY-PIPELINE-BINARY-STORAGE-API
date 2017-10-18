@@ -19,6 +19,7 @@
     </appender>
 
     <logger name="delivery.pipeline.binary.storage.api" level="info"/>
+    <logger name="org.apache.catalina.session.ManagerBase" level="info"/>
 
     <root level="INFO">
         <appender-ref ref="dailyRollingFileAppender"/>
