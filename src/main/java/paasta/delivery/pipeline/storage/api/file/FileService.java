@@ -64,7 +64,7 @@ public class FileService {
      *
      * @param deleteFile the delete file
      */
-    void deleteFile(FileInfo deleteFile) {
+    String deleteFile(FileInfo deleteFile) {
 
         String storedFileName = deleteFile.getStoredFileName();
         StoredObject object = container.getObject(storedFileName);
@@ -73,5 +73,7 @@ public class FileService {
         LOGGER.info("DELETE :: object ::: {}", object);
 
         object.delete();
+
+        return Constants.RESULT_STATUS_SUCCESS;
     }
 }

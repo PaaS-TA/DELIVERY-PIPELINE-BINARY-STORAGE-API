@@ -1,53 +1,53 @@
 package paasta.delivery.pipeline.storage.api.file;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Created by hrjin on 2017-06-12.
  */
 @RestController
-@RequestMapping
+@RequestMapping(value = "/file")
 public class FileController {
 
-    private static  final Logger logger = LoggerFactory.getLogger(FileController.class);
-    private static final String BASE_URL = "/file";
+    private final FileService fileService;
 
+    /**
+     * Instantiates a new File controller.
+     *
+     * @param fileService the file service
+     */
     @Autowired
-    private FileService fileService;
+    public FileController(FileService fileService) {this.fileService = fileService;}
 
 
     /**
-     *  파일 업로드 - execute
+     * Upload file file info.
      *
-     * @param multipartFile
-     * @return file upload
-     * @throws Exception
+     * @param multipartFile the multipart file
+     * @return the file info
+     * @throws IOException the io exception
      */
-    @RequestMapping(value = {BASE_URL + "/uploadFile"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/uploadFile"}, method = RequestMethod.POST)
     @ResponseBody
-    public FileInfo uploadFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
-        logger.info("uploadFile :: param:: {}", multipartFile.toString());
-        System.out.println("originalName:::"+multipartFile.getOriginalFilename());
+    public FileInfo uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         return fileService.upload(multipartFile);
     }
 
 
-
-
     /**
-     * 업로드된 파일 삭제 - execute
+     * Delete file string.
      *
-     * @param fileInfo
-     * @return
+     * @param fileInfo the file info
+     * @return the string
      */
-    @RequestMapping(value = {BASE_URL + "/fileDelete"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/fileDelete"}, method = RequestMethod.POST)
     @ResponseBody
-    public String deleteFile(@RequestBody FileInfo fileInfo){
-        fileService.deleteFile(fileInfo);
-        return "delete success";
+    public String deleteFile(@RequestBody FileInfo fileInfo) {
+        return fileService.deleteFile(fileInfo);
     }
+
 }

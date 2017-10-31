@@ -1,16 +1,14 @@
 package paasta.delivery.pipeline.storage.api.file;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
+import paasta.delivery.pipeline.storage.api.common.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,11 +54,20 @@ public class FileServiceTest {
         // TEST :; UPLOAD FILE
         FileInfo resultModel = fileService.upload(multipartFile);
 
-        FileInfo deleteFile = new FileInfo();
-        deleteFile.setStoredFileName(resultModel.getStoredFileName());
+        Assert.assertNotNull(resultModel.getOriginalFileName());
+        Assert.assertNotNull(resultModel.getFileUrl());
+        Assert.assertNotNull(resultModel.getOriginalFileName());
+        Assert.assertEquals(Constants.RESULT_STATUS_SUCCESS, resultModel.getResultStatus());
+
+
+        FileInfo testDeleteFile = new FileInfo();
+        testDeleteFile.setStoredFileName(resultModel.getStoredFileName());
 
 
         // TEST :; DELETE FILE
-        fileService.deleteFile(deleteFile);
+        String result = fileService.deleteFile(testDeleteFile);
+
+        Assert.assertEquals(result, Constants.RESULT_STATUS_SUCCESS);
     }
+
 }
