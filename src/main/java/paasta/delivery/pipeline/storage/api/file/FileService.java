@@ -5,11 +5,9 @@ import org.javaswift.joss.model.StoredObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import paasta.delivery.pipeline.storage.api.common.Constants;
-import paasta.delivery.pipeline.storage.api.common.RestTemplateService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -21,20 +19,24 @@ import java.util.UUID;
 public class FileService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileService.class);
-    private final RestTemplateService restTemplateService;
 
-    @Autowired
-    Container container;
-
-    @Autowired
-    public FileService(RestTemplateService restTemplateService) {this.restTemplateService = restTemplateService;}
+    private final Container container;
 
     /**
-     * MultipartFile 을 업로드 ::: Swift Object Storage
+     * Instantiates a new File service.
      *
-     * @param multipartFile
-     * @return
-     * @throws IOException
+     * @param container the container
+     */
+    @Autowired
+    public FileService(Container container) {this.container = container;}
+
+
+    /**
+     * Upload file info.
+     *
+     * @param multipartFile the multipart file
+     * @return the file info
+     * @throws IOException the io exception
      */
     FileInfo upload(MultipartFile multipartFile) throws IOException {
         String originalFileName = multipartFile.getOriginalFilename();
@@ -42,8 +44,8 @@ public class FileService {
         String storedFileName = uuid + originalFileName.substring(originalFileName.lastIndexOf('.'));
         StoredObject object = container.getObject(storedFileName);
 
-        LOGGER.info("object ::: {}", object);
-        LOGGER.info("url ::: {}", object.getPublicURL());
+        LOGGER.info("UPLOAD :: object ::: {}", object);
+        LOGGER.info("UPLOAD :: url ::: {}", object.getPublicURL());
 
         object.uploadObject(multipartFile.getInputStream());
 
@@ -51,28 +53,25 @@ public class FileService {
         fileInfo.setOriginalFileName(originalFileName);
         fileInfo.setStoredFileName(storedFileName);
         fileInfo.setFileUrl(object.getPublicURL());
+        fileInfo.setResultStatus(Constants.RESULT_STATUS_SUCCESS);
 
-        FileInfo resultModel = restTemplateService.send(Constants.TARGET_COMMON_API, "/file/upload", HttpMethod.POST, fileInfo, FileInfo.class);
-        resultModel.setResultStatus(Constants.RESULT_STATUS_SUCCESS);
-
-        return resultModel;
+        return fileInfo;
     }
 
 
     /**
-     * 파일 삭제
+     * Delete file.
      *
-     * @param deleteFile
-     * @return
+     * @param deleteFile the delete file
      */
-    public String deleteFile(FileInfo deleteFile) {
+    void deleteFile(FileInfo deleteFile) {
 
         String storedFileName = deleteFile.getStoredFileName();
         StoredObject object = container.getObject(storedFileName);
-        LOGGER.info("object ::: " + object);
+
+        LOGGER.info("DELETE :: storedFileName ::: {}", storedFileName);
+        LOGGER.info("DELETE :: object ::: {}", object);
+
         object.delete();
-
-        return "delete success.";
     }
-
 }
