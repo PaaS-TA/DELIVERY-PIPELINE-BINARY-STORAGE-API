@@ -13,17 +13,16 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'war'
+//apply plugin: 'war'
 
 ext {
 	springBootVersion = '1.5.3.RELEASE'
 }
 
-version '0.1'
+//version '0.1'
 
-war {
-	baseName = 'paasta-delivery-pipeline-storage-api'
-	version "$version"
+jar {
+	baseName = 'delivery-pipeline-storage-api'
 }
 
 sourceCompatibility = 1.8
