@@ -22,7 +22,7 @@ ext {
 //version '0.1'
 
 jar {
-	baseName = 'delivery-pipeline-storage-api'
+	baseName = 'delivery-pipeline-binary-storage-api'
 }
 
 sourceCompatibility = 1.8
