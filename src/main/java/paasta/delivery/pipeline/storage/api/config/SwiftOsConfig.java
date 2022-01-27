@@ -32,8 +32,8 @@ public class SwiftOsConfig {
         config.setUsername(username);
         config.setPassword(password);
         config.setAuthUrl(authUrl + "/tokens");
-        config.setAuthenticationMethod(AuthenticationMethod.KEYSTONE);
-        config.setPreferredRegion("Public");
+        config.setAuthenticationMethod(AuthenticationMethod.KEYSTONE_V3);
+        config.setPreferredRegion("paasta");
 
         return config;
     }

@@ -35,7 +35,7 @@ repositories {
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 	compile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
-	compile("org.javaswift:joss:0.9.12")
+	compile("org.javaswift:joss:0.10.3")
 	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
